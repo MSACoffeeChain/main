@@ -1,4 +1,4 @@
-package MSACOFFEECHAINSAMPLE;
+package msacoffeechainsample;
 
 public class PreProduce extends AbstractEvent {
 

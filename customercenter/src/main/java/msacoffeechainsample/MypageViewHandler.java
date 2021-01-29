@@ -22,14 +22,14 @@ public class MypageViewHandler {
         try {
             if (ordered.isMe()) {
                 // view 객체 생성
-                  = new ();
+                Mypage mypage= new Mypage();
                 // view 객체에 이벤트의 Value 를 set 함
-                .setOrderId(.getId());
-                .setOrderStatus(.getStatus());
-                .setQty(.getQty());
-                .setProductName(.getProductName());
+                mypage.setOrderId(ordered.getId());
+                mypage.setOrderStatus(ordered.getStatus());
+                mypage.setQty(ordered.getQty());
+                mypage.setProductName(ordered.getProductName());
                 // view 레파지 토리에 save
-                Repository.save();
+                mypageRepository.save(mypage);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -42,11 +42,11 @@ public class MypageViewHandler {
         try {
             if (produced.isMe()) {
                 // view 객체 조회
-                List<> List = Repository.findByOrderId(.getOrderId());
-                for(  : List){
+                List<Mypage> list = mypageRepository.findByOrderId(produced.getOrderId());
+                for(Mypage mypage : list){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     // view 레파지 토리에 save
-                    Repository.save();
+                    mypageRepository.save(mypage);
                 }
             }
         }catch (Exception e){
@@ -58,11 +58,11 @@ public class MypageViewHandler {
         try {
             if (orderCanceled.isMe()) {
                 // view 객체 조회
-                List<> List = Repository.findByOrderId(.getId());
-                for(  : List){
+                List<Mypage> list = mypageRepository.findByOrderId(orderCanceled.getId());
+                for(Mypage mypage : list){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     // view 레파지 토리에 save
-                    Repository.save();
+                    mypageRepository.save(mypage);
                 }
             }
         }catch (Exception e){
@@ -75,7 +75,7 @@ public class MypageViewHandler {
         try {
             if (productCanceled.isMe()) {
                 // view 레파지 토리에 삭제 쿼리
-                Repository.deleteByOrderId(.getOrderId());
+                mypageRepository.deleteByOrderId(productCanceled.getOrderId());
             }
         }catch (Exception e){
             e.printStackTrace();
