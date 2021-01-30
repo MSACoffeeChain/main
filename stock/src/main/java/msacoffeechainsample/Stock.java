@@ -27,6 +27,20 @@ public class Stock {
 
 
     }
+    
+    @PostPersist
+    public void onPostPersist(){
+        
+        if("Latte".equals(productName)) setQty(0);
+    	
+        setQty(0);
+        
+        StockReduced stockReduced = new StockReduced();
+        BeanUtils.copyProperties(this, stockReduced);
+      
+        stockReduced.publish();
+
+    }
 
 
     public Long getId() {
