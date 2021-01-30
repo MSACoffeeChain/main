@@ -13,7 +13,7 @@ public class Stock {
     private Long id;
     private Integer qty;
     private String productName;
-
+ 
     
     @PreUpdate
     public void onPreUpdate(){
