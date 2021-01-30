@@ -14,26 +14,13 @@ public class Stock {
     private Integer qty;
     private String productName;
 
-    @PreUpdate
-    public void onPreUpdate(){
-            	
-        
-        if("Latte".equals(productName)) setQty(0);
-    		
-        StockReduced stockReduced = new StockReduced();
-        BeanUtils.copyProperties(this, stockReduced);
       
-        stockReduced.publishAfterCommit();
-
-
-    }
-    
     @PostPersist
     public void onPostPersist(){
         
         if("Latte".equals(productName)) setQty(0);
     	
-        setQty(0);
+        setQty(100);
         
         StockReduced stockReduced = new StockReduced();
         BeanUtils.copyProperties(this, stockReduced);
