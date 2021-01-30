@@ -14,16 +14,18 @@ public class Stock {
     private Integer qty;
     private String productName;
 
-   @PreUpdate
+    @PreUpdate
     public void onPreUpdate(){
     	
-    	if("Latte".equals(productName)) setQty(0);
+    	if("Latte".equals(productName)) 
+    			setQty(0);
+    	else 	
+    			setQty(0);
     		
         StockReduced stockReduced = new StockReduced();
         BeanUtils.copyProperties(this, stockReduced);
       
         stockReduced.publishAfterCommit();
-
 
     }
 
