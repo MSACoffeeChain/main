@@ -21,7 +21,7 @@ public class Stock {
     	if("Latte".equals(productName)) 
     			setQty(0);
     	else 	
-    			setQty(1000);
+    			setQty(2000);
     		
         StockReduced stockReduced = new StockReduced();
         BeanUtils.copyProperties(this, stockReduced);
