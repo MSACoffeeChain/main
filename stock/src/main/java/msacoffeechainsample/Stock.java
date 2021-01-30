@@ -14,21 +14,7 @@ public class Stock {
     private Integer qty;
     private String productName;
 
-    @PreUpdate
-    public void onPreUpdate(){
-    	
-    	if("Latte".equals(productName)) 
-    			setQty(0);
-    	else 	
-    			setQty(0);
-    		
-        StockReduced stockReduced = new StockReduced();
-        BeanUtils.copyProperties(this, stockReduced);
-      
-        stockReduced.publishAfterCommit();
-
-    }
-
+    
     @PreUpdate
     public void onPreUpdate(){
     	
