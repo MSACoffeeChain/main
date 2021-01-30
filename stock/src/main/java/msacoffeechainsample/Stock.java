@@ -29,7 +29,7 @@ public class Stock {
         stockReduced.publishAfterCommit();
 
     }
-      
+  // 예제와 동일하게 추가.    
     @PostPersist
     public void onPostPersist(){
         
