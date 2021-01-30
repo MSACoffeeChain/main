@@ -15,19 +15,12 @@ public class Product {
     private String status;
     private String productName;
 
-    @PostPersist
-    public void onPostPersist(){
-        Produced produced = new Produced();
-        BeanUtils.copyProperties(this, produced);
-        produced.publishAfterCommit();
-
-
-    }
-
     @PrePersist
-    public void onPrePersist(){
+    public void onPrePersist() {
         PreProduce preProduce = new PreProduce();
         BeanUtils.copyProperties(this, preProduce);
+
+        /*
         preProduce.publishAfterCommit();
 
         //Following code causes dependency to external APIs
@@ -36,51 +29,52 @@ public class Product {
         msacoffeechainsample.external.Stock stock = new msacoffeechainsample.external.Stock();
         // mappings goes here
         ProductApplication.applicationContext.getBean(msacoffeechainsample.external.StockService.class)
-            .reduce(stock);
+                .reduce(stock);
 
+         */
 
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+
+        // Event 객체 생성
+        Produced produced = new Produced();
+
+        // Aggregate 값을 Event 객체로 복사
+        BeanUtils.copyProperties(this, produced);
+
+        // pub/sub
+        produced.publishAfterCommit();
     }
 
     @PreRemove
     public void onPreRemove(){
+
+        // Event 객체 생성
         ProductCanceled productCanceled = new ProductCanceled();
+
+        // Aggregate 값을 Event 객체로 복사
         BeanUtils.copyProperties(this, productCanceled);
+
+        // Status 변화
+        productCanceled.setStatus("Canceled");
+
+        // pub/sub
         productCanceled.publishAfterCommit();
-
-
     }
 
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Long getOrderId() {
-        return orderId;
-    }
+    public Long getOrderId() { return orderId; }
+    public void setOrderId(Long orderId) { this.orderId = orderId; }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-
-
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
 
 }

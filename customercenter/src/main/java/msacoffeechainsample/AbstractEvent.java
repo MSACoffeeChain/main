@@ -58,7 +58,7 @@ public class AbstractEvent {
         this.publish(this.toJson());
     }
 
-    public void publishAfterCommit(){
+    public void publishAfterCommit() {
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
 
             @Override
