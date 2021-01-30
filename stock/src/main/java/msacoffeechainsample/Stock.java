@@ -18,9 +18,10 @@ public class Stock {
     @PostPersist
     public void onPostPersist(){
         
-        if("Latte".equals(productName)) setQty(0);
-    	
-        setQty(100);
+        if("Latte".equals(productName)) 
+            setQty(0);
+    	else
+            setQty(100);
         
         StockReduced stockReduced = new StockReduced();
         BeanUtils.copyProperties(this, stockReduced);
