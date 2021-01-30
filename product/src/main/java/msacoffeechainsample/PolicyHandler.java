@@ -31,6 +31,7 @@ public class PolicyHandler{
             // Order 값으로 Product 설정
             product.setOrderId(ordered.getId());
             product.setProductName(ordered.getProductName());
+            product.setQty(ordered.getQty());
 
             // Status 변화
             product.setStatus("Ready");

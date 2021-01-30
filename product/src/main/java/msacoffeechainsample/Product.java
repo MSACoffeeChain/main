@@ -14,6 +14,7 @@ public class Product {
     private Long orderId;
     private String status;
     private String productName;
+    private Integer qty;
 
     @PrePersist
     public void onPrePersist() {
@@ -77,4 +78,6 @@ public class Product {
     public String getProductName() { return productName; }
     public void setProductName(String productName) { this.productName = productName; }
 
+    public Integer getQty() { return qty; }
+    public void setQty(Integer qty) { this.qty = qty; }
 }
