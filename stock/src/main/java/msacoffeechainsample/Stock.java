@@ -2,6 +2,8 @@ package msacoffeechainsample;
 
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Entity
@@ -14,6 +16,7 @@ public class Stock {
     private Integer qty;
     private String productName;
     
+    @Autowired
     StockRepository stockRepository;
 
     @PreUpdate
