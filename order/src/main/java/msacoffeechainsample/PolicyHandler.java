@@ -34,7 +34,7 @@ public class PolicyHandler{
             order.setProductId(produced.getId());
 
             // Status 변화
-            order.setStatus("Completed");
+            order.setStatus(produced.getStatus());
 
             // Order update
             orderRepository.save(order);
@@ -46,6 +46,15 @@ public class PolicyHandler{
 
         if(productCanceled.isMe()){
             System.out.println("##### listener  : " + productCanceled.toJson());
+
+            // Produced된 Order 가져오기
+            Order order = orderRepository.findById(productCanceled.getOrderId()).get();
+
+            // Status 변화
+            order.setStatus(productCanceled.getStatus());
+
+            // Order update
+            orderRepository.save(order);
         }
     }
 

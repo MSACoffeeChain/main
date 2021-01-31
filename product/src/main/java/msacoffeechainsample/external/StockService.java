@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
 
-@FeignClient(name="stock", url="http://stock:8080")
+@FeignClient(name="stock", url="${api.stock.url}")
 public interface StockService {
 
-    @RequestMapping(method= RequestMethod.PATCH, path="/stocks")
-    public void reduce(@RequestBody Stock stock);
+    @RequestMapping(method= RequestMethod.POST, path="/stocks/reduce")
+    public boolean reduce(@RequestBody Stock stock);
 
 }

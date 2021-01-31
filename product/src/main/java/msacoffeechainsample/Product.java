@@ -18,26 +18,37 @@ public class Product {
 
     @PrePersist
     public void onPrePersist() {
+
+        // Event 객체 생성
         PreProduce preProduce = new PreProduce();
+
+        // Aggregate 값을 Event 객체로 복사
         BeanUtils.copyProperties(this, preProduce);
 
-        /*
-        preProduce.publishAfterCommit();
-
-        //Following code causes dependency to external APIs
-        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
-
         msacoffeechainsample.external.Stock stock = new msacoffeechainsample.external.Stock();
-        // mappings goes here
-        ProductApplication.applicationContext.getBean(msacoffeechainsample.external.StockService.class)
+        stock.setProductName(preProduce.getProductName());
+        stock.setQty(preProduce.getQty());
+
+        // req/res
+        boolean stockResponse = ProductApplication.applicationContext.getBean(msacoffeechainsample.external.StockService.class)
                 .reduce(stock);
 
-         */
-
+        // Status 변화
+        if (stockResponse) {
+            this.setStatus("Completed");
+        } else {
+            this.setStatus("Out of stock");
+        }
     }
 
     @PostPersist
     public void onPostPersist() {
+
+        try {
+            Thread.sleep(1000 * 5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Event 객체 생성
         Produced produced = new Produced();
@@ -49,17 +60,19 @@ public class Product {
         produced.publishAfterCommit();
     }
 
-    @PreRemove
-    public void onPreRemove(){
+    @PreUpdate
+    public void onPreUpdate(){
+
+        // 제작 완료가 아닌 경우에만 주문 취소 가능
+        if (!this.getStatus().equals("Completed")) {
+            this.setStatus("Canceled");
+        }
 
         // Event 객체 생성
         ProductCanceled productCanceled = new ProductCanceled();
 
         // Aggregate 값을 Event 객체로 복사
         BeanUtils.copyProperties(this, productCanceled);
-
-        // Status 변화
-        productCanceled.setStatus("Canceled");
 
         // pub/sub
         productCanceled.publishAfterCommit();

@@ -1,6 +1,8 @@
 package msacoffeechainsample;
 
 import javax.persistence.*;
+
+import msacoffeechainsample.external.Product;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
 
@@ -36,18 +38,29 @@ public class Order {
         ordered.publishAfterCommit();
     }
 
-    @PreRemove
-    public void onPreRemove(){
+    @PreUpdate
+    public void onPreUpdate(){
 
-        // Event 객체 생성
-        OrderCanceled orderCanceled = new OrderCanceled();
+        // 주문 취소의 경우
+        if (this.getStatus().equals("Canceled")) {
 
-        // Aggregate 값을 Event 객체로 복사
-        BeanUtils.copyProperties(this, orderCanceled);
+            // Event 객체 생성
+            OrderCanceled orderCanceled = new OrderCanceled();
 
-        // req/res
-        OrderApplication.applicationContext.getBean(msacoffeechainsample.external.ProductService.class)
-            .cancel(orderCanceled.getProductId());
+            // Aggregate 값을 Event 객체로 복사
+            BeanUtils.copyProperties(this, orderCanceled);
+
+            msacoffeechainsample.external.Product product = new msacoffeechainsample.external.Product();
+            product.setId(orderCanceled.getProductId());
+            product.setOrderId(orderCanceled.getId());
+            product.setProductName(orderCanceled.getProductName());
+            product.setStatus(orderCanceled.getStatus());
+            product.setQty(orderCanceled.getQty());
+
+            // req/res
+            OrderApplication.applicationContext.getBean(msacoffeechainsample.external.ProductService.class)
+                    .cancel(product.getId(), product);
+        }
     }
 
 

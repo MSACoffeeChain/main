@@ -12,7 +12,7 @@ import java.util.Date;
 @FeignClient(name="product", url="${api.product.url}")
 public interface ProductService {
 
-    @RequestMapping(method=RequestMethod.DELETE, path="/products/{id}")
-    public void cancel(@PathVariable("id") Long productId);
+    @RequestMapping(method=RequestMethod.PUT, path="/products/{id}")
+    public void cancel(@PathVariable("id") Long productId, @RequestBody Product product);
 
 }
