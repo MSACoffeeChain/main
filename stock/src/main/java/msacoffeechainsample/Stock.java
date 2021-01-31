@@ -15,55 +15,29 @@ public class Stock {
     private Long id;
     private Integer qty;
     private String productName;
-    
-    @Autowired
-    StockRepository stockRepository;
 
     @PreUpdate
-    public boolean onPreUpdate(){
-    	
-    	boolean result = false;
-    	
-    	if(null == this.getId()){
-    		
-    		if(stockRepository.findById(this.getId()) != null){
-    			
-    			 Stock 	stock   	= stockRepository.findById(this.getId()).get();
-    			 int 	stockQty   	= stock.getQty();
-    			 int 	requestQty 	= this.getQty();
-    			 
-    			  		result 		= (stockQty > requestQty) ? true : false;
-    		}
-    		
-    	} 
-        
-        return result;
+    public void onPreUpdate(){
+        StockReduced stockReduced = new StockReduced();
+        BeanUtils.copyProperties(this, stockReduced);
     }
-
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
+
     public Integer getQty() {
         return qty;
     }
-
     public void setQty(Integer qty) {
         this.qty = qty;
     }
+
     public String getProductName() {
         return productName;
     }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-
-
-
+    public void setProductName(String productName) { this.productName = productName; }
 }
