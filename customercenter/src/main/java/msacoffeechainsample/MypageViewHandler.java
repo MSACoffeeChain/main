@@ -21,13 +21,16 @@ public class MypageViewHandler {
     public void whenOrdered_then_CREATE_1 (@Payload Ordered ordered) {
         try {
             if (ordered.isMe()) {
+
                 // view 객체 생성
                 Mypage mypage= new Mypage();
+
                 // view 객체에 이벤트의 Value 를 set 함
                 mypage.setOrderId(ordered.getId());
                 mypage.setOrderStatus(ordered.getStatus());
                 mypage.setQty(ordered.getQty());
                 mypage.setProductName(ordered.getProductName());
+
                 // view 레파지 토리에 save
                 mypageRepository.save(mypage);
             }
@@ -36,15 +39,19 @@ public class MypageViewHandler {
         }
     }
 
-
     @StreamListener(KafkaProcessor.INPUT)
     public void whenProduced_then_UPDATE_1(@Payload Produced produced) {
         try {
             if (produced.isMe()) {
+
                 // view 객체 조회
                 List<Mypage> list = mypageRepository.findByOrderId(produced.getOrderId());
                 for(Mypage mypage : list){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setProductId(produced.getId());
+                    mypage.setProductStatus(produced.getStatus());
+                    mypage.setOrderStatus(produced.getStatus());
+
                     // view 레파지 토리에 save
                     mypageRepository.save(mypage);
                 }
