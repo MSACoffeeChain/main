@@ -13,14 +13,28 @@ public class Stock {
     private Long id;
     private Integer qty;
     private String productName;
+    
+    StockRepository stockRepository;
 
     @PreUpdate
-    public void onPreUpdate(){
-        StockReduced stockReduced = new StockReduced();
-        BeanUtils.copyProperties(this, stockReduced);
-        stockReduced.publishAfterCommit();
-
-
+    public boolean onPreUpdate(){
+    	
+    	boolean result = false;
+    	
+    	if(null == this.getId()){
+    		
+    		if(stockRepository.findById(this.getId()) != null){
+    			
+    			 Stock 	stock   	= stockRepository.findById(this.getId()).get();
+    			 int 	stockQty   	= stock.getQty();
+    			 int 	requestQty 	= this.getQty();
+    			 
+    			  		result 		= (stockQty > requestQty) ? true : false;
+    		}
+    		
+    	} 
+        
+        return result;
     }
 
 
