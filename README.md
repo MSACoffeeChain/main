@@ -61,17 +61,17 @@ MSAEZ로 모델링한 이벤트스토밍 결과
     
 ### 엑터,커맨드 만들기
 
-![image](https://user-images.githubusercontent.com/75309297/106565267-e1dd0400-6571-11eb-9b03-b80e1fe7f4a2.png)
+![image](https://user-images.githubusercontent.com/75309297/106637613-4629b300-65c6-11eb-9793-3b325c7cfb6e.png)
 
 ### 어그리게잇 추가
 
-![image](https://user-images.githubusercontent.com/75309297/106565449-2e284400-6572-11eb-8d78-0e86449b4c23.png)
+![image](https://user-images.githubusercontent.com/75309297/106637649-517cde80-65c6-11eb-8f33-fbc3931323d2.png)
 
     - 주문, 생산, 재고 어그리게잇을 생성하고 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
 
 ### 바운디드 컨택스트 묶기
 
-![image](https://user-images.githubusercontent.com/75309297/106565561-59ab2e80-6572-11eb-80c7-66e17c71bfa4.png)
+![image](https://user-images.githubusercontent.com/75309297/106637691-5f326400-65c6-11eb-8e4e-8fa9e1d3faec.png)
 
 - 도메인 서열 분리
 
@@ -81,11 +81,11 @@ MSAEZ로 모델링한 이벤트스토밍 결과
 
 ### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
 
-![image](https://user-images.githubusercontent.com/75309297/106565730-9840e900-6572-11eb-95d8-2f2b6c74f6f2.png)
+![image](https://user-images.githubusercontent.com/75309297/106637724-68233580-65c6-11eb-9c53-75f98f3c3ae9.png)
 
 ### 폴리시 이동
 
-![image](https://user-images.githubusercontent.com/75309297/106565854-ce7e6880-6572-11eb-898a-a24569800fc3.png)
+![image](https://user-images.githubusercontent.com/75309297/106637759-72453400-65c6-11eb-8df4-d5c573996e92.png)
 
 ### 컨택스트맵핑 (점선은 Pub/Sub, 실선은 Req/Resp)
 
