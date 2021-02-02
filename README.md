@@ -361,9 +361,9 @@ hystrix:
 * siege 툴 사용법:
 ```
  siege가 생성되어 있지 않으면:
- kubectl run siege --image=apexacme/siege-nginx -n phone82
+ kubectl run siege --image=apexacme/siege-nginx -n coffee
  siege 들어가기:
- kubectl exec -it pod/siege-5c7c46b788-4rn4r -c siege -n phone82 -- /bin/bash
+ kubectl exec -it pod/siege-5c7c46b788-4rn4r -c siege -n coffee -- /bin/bash
  siege 종료:
  Ctrl + C -> exit
 ```
