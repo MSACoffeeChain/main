@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: order
-          image: skccteam03/order:latest
+          image: skccteam03.azurecr.io/order:latest
           ports:
             - containerPort: 8080
           readinessProbe:
