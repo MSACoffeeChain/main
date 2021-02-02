@@ -17,7 +17,6 @@ spec:
     spec:
       containers:
         - name: order
-          image: username/order:latest
           image: skccteam03/order:latest
           ports:
             - containerPort: 8080
