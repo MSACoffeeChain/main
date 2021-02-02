@@ -17,7 +17,7 @@ Here are some ideas to get you started:
 
 엑터,커맨드 만들기
 
-<![image](https://user-images.githubusercontent.com/75309297/106565267-e1dd0400-6571-11eb-9b03-b80e1fe7f4a2.png) width="175" height="250">
+![image](https://user-images.githubusercontent.com/75309297/106565267-e1dd0400-6571-11eb-9b03-b80e1fe7f4a2.png)
 
 어그리게잇 추가
 
