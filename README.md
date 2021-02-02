@@ -6,7 +6,18 @@
 - [체크포인트](#체크포인트)
 - [분석/설계](#분석설계)
 - [구현](#구현)
+    - [DDD 의 적용](##DDD-의-적용)
+    - [폴리글랏 퍼시스턴스](##폴리글랏-퍼시스턴스)
+    - [Gateway 적용](##Gateway-적용)
+    - [동기식 호출 과 Fallback 처리](##동기식-호출-과-Fallback-처리)
+    - [비동기식 호출 / 시간적 디커플링 / 장애격리](##비동기식-호출-/-시간적-디커플링-/-장애격리)
 - [운영](#운영)
+    - [Deploy / Pipeline](##Deploy-/-Pipeline)
+    - [동기식 호출 / 서킷 브레이킹 / 장애격리](##동기식-호출-/-서킷-브레이킹-/-장애격리)
+    - [오토스케일 아웃](##오토스케일-아웃)
+    - [무정지 재배포](##무정지-재배포)
+    - [Config Map](##Config-Map)
+    - [Self-healing (Liveness Probe)](##Self-healing-(Liveness-Probe))
 
 # 서비스 시나리오
 
@@ -85,10 +96,10 @@
     - 고객이 MyPage에서 커피주문 내역을 볼 수 있어야 한다.(OK)
     
     
-# 구현.
+# 구현
 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 8084 이다)
 
-```
+```bash
 cd order
 mvn spring-boot:run
 
@@ -137,7 +148,7 @@ gateway > resources > applitcation.yml 설정
 
 gateway 테스트
 
-```
+```bash
 http POST http://10.0.232.104:8080/orders productName="Americano" qty=1
 ```
 ![6_Gateway](https://user-images.githubusercontent.com/77084784/106618857-4b313700-65b3-11eb-83aa-c9f04a28683b.jpg)
@@ -149,8 +160,8 @@ http POST http://10.0.232.104:8080/orders productName="Americano" qty=1
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
 
 - 서비스를 호출하기 위하여 FeignClient 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
-```
-# (app) external > StockService.java
+``` java
+// (app) external > StockService.java
 
 package msacoffeechainsample.external;
 
@@ -165,8 +176,8 @@ public interface StockService {
 ![7_동기호출](https://user-images.githubusercontent.com/77084784/106619020-7caa0280-65b3-11eb-9c88-32ea7e810f58.jpg)
 
 - 주문 취소 시 제고 변경을 먼저 요청하도록 처리
-```
-# (app) Order.java (Entity)
+```java
+// (app) Order.java (Entity)
 
     @PreUpdate
     public void onPreUpdate(){
@@ -187,7 +198,7 @@ public interface StockService {
 
 - 동기식 호출이 적용되서 제품 서비스에 장애가 나면 주문 서비스도 못받는다는 것을 확인:
 
-```
+```bash
 #제품(product) 서비스를 잠시 내려놓음 (ctrl+c)
 
 #주문취소 (order)
@@ -195,7 +206,7 @@ http PATCH http://localhost:8081/orders/2 status="Canceled"    #Fail
 ```
 ![image](https://user-images.githubusercontent.com/73699193/98072284-04934a00-1ea9-11eb-9fad-40d3996e109f.png)
 
-```
+```bash
 #제품(product) 서비스 재기동
 cd product
 mvn spring-boot:run
@@ -222,7 +233,7 @@ http PATCH http://localhost:8081/orders/2 status="Canceled"    #Success
 ![11_비동기 호출(주문_제조)](https://user-images.githubusercontent.com/77084784/106619501-01951c00-65b4-11eb-88e9-8870bad805f7.jpg)
 
 제품(product) 시스템은 주문(order)/제고(stock)와 완전히 분리되어있으며(sync transaction 없음), 이벤트 수신에 따라 처리되기 때문에, 제품(product)이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다.(시간적 디커플링):
-```
+```bash
 #제품(product) 서비스를 잠시 내려놓음 (ctrl+c)
 
 #주문하기(order)
@@ -232,7 +243,7 @@ http http://localhost:8081/orders item="Hot Tea" qty=10  #Success
 http GET http://localhost:8081/orders/1    # 상태값이 'Completed'이 아닌 'Requested'에서 멈춤을 확인
 ```
 ![12_time분리_1](https://user-images.githubusercontent.com/77084784/106619595-196ca000-65b4-11eb-892e-a0ad2fa1b7f0.jpg)
-```
+```bash
 #제품(product) 서비스 기동
 cd product
 mvn spring-boot:run
@@ -292,3 +303,12 @@ kubectl get all -n coffee
 ```
 ![kubectl_expose](https://user-images.githubusercontent.com/26760226/106623324-d7455d80-65b7-11eb-809c-165bfa828bbe.png)
 
+## 동기식 호출 / 서킷 브레이킹 / 장애격리
+
+## 오토스케일 아웃
+
+## 무정지 재배포
+
+## Config Map
+
+## Self-healing (Liveness Probe)
