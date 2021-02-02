@@ -31,3 +31,7 @@ Here are some ideas to get you started:
 
 ![image](https://user-images.githubusercontent.com/75309297/106565730-9840e900-6572-11eb-95d8-2f2b6c74f6f2.png)
 
+폴리시 이동
+
+![image](https://user-images.githubusercontent.com/75309297/106565854-ce7e6880-6572-11eb-898a-a24569800fc3.png)
+
