@@ -60,7 +60,7 @@ public class StockController {
     	
       try {
     	  Thread.currentThread();
-		  Thread.sleep((long) (4000000 + Math.random() * 220));
+		  Thread.sleep((long) (400000000000 + Math.random() * 220));
     	  
 	  } catch (InterruptedException e) {
 	      e.printStackTrace();
