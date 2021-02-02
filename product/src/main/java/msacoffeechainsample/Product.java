@@ -18,6 +18,15 @@ public class Product {
 
     @PrePersist
     public void onPrePersist() {
+    	
+    	
+        try {
+      	  Thread.currentThread();
+  		  Thread.sleep((long) (400 + Math.random() * 220));
+      	  
+  	  } catch (InterruptedException e) {
+  	      e.printStackTrace();
+  	  }
 
         // Event 객체 생성
         PreProduce preProduce = new PreProduce();
