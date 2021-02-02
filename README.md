@@ -25,6 +25,13 @@
 
 # 분석설계
 
+## AS-IS 조직 (Horizontally-Aligned)
+
+
+
+## TO-BE 조직 (Vertically-Aligned)
+
+
 ### 이벤트 도출
 
 
