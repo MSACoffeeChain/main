@@ -88,3 +88,121 @@
 # 구현.
 
 # 운영
+
+
+
+
+## Config Map
+
+# Service ClusterIP 확인
+![image](https://user-images.githubusercontent.com/64818523/106609778-4c5d6680-65a9-11eb-8b31-8e11b3e22162.png)
+
+# order ConfigMap 설정
+  - order/src/main/resources/apllication.yml 설정
+
+  * default쪽
+
+![image](https://user-images.githubusercontent.com/64818523/106609096-8ed27380-65a8-11eb-88a2-e1b732e17869.png)
+
+  * docker 쪽
+
+![image](https://user-images.githubusercontent.com/64818523/106609301-c7724d00-65a8-11eb-87d3-d6f03c693db6.png)
+
+- order/kubernetes/Deployment.yml 설정
+
+![image](https://user-images.githubusercontent.com/64818523/106609409-dd800d80-65a8-11eb-8321-aa047e8a68aa.png)
+
+
+# product ConfigMap 설정
+  - product/src/main/resources/apllication.yml 설정
+
+  * default쪽
+  
+![image](https://user-images.githubusercontent.com/64818523/106609502-f8eb1880-65a8-11eb-96ed-8eeb1fc9f87c.png)
+
+  * docker 쪽
+  
+![image](https://user-images.githubusercontent.com/64818523/106609558-0bfde880-65a9-11eb-9b5a-240566adbad1.png)
+
+- product/kubernetes/Deployment.yml 설정
+
+![image](https://user-images.githubusercontent.com/64818523/106612752-c93e0f80-65ac-11eb-9509-9938f4ccf767.png)
+
+
+# config map 생성 후 조회
+```
+kubectl create configmap apiorderurl --from-literal=url=http://10.0.54.30:8080 --from-literal=fluentd-server-ip=10.xxx.xxx.xxx -n coffee
+```
+![image](https://user-images.githubusercontent.com/64818523/106609630-1f10b880-65a9-11eb-9c1d-be9d65f03a1e.png)
+
+```
+kubectl create configmap apiproducturl --from-literal=url=http://10.0.164.216:8080 --from-literal=fluentd-server-ip=10.xxx.xxx.xxx -n coffee
+```
+![image](https://user-images.githubusercontent.com/64818523/106609694-3485e280-65a9-11eb-9b59-c0d4a2ba3aed.png)
+
+- 설정한 url로 주문 호출
+```
+http POST localhost:8081/orders productName="Americano" qty=1
+```
+![image](https://user-images.githubusercontent.com/73699193/98109319-b732cf00-1ee0-11eb-9e92-ad0e26e398ec.png)
+
+- configmap 삭제 후 app 서비스 재시작
+```
+kubectl delete configmap apiorderurl -n coffee
+kubectl delete configmap apiproducturl -n coffee
+
+kubectl get pod/order-74c76b478-xx7n7 -n coffee -o yaml | kubectl replace --force -f-
+kubectl get pod/product-66ddb989b8-r82sm -n coffee -o yaml | kubectl replace --force -f-
+```
+![image](https://user-images.githubusercontent.com/73699193/98110005-cf571e00-1ee1-11eb-973f-2f4922f8833c.png)
+![image](https://user-images.githubusercontent.com/73699193/98110005-cf571e00-1ee1-11eb-973f-2f4922f8833c.png)
+
+- configmap 삭제된 상태에서 주문 호출   
+```
+http POST localhost:8081/orders productName="Americano" qty=3
+kubectl get all -n coffee
+```
+![image](https://user-images.githubusercontent.com/73699193/98110323-42f92b00-1ee2-11eb-90f3-fe8044085e9d.png)
+
+![image](https://user-images.githubusercontent.com/73699193/98110445-720f9c80-1ee2-11eb-851e-adcd1f2f7851.png)
+
+![image](https://user-images.githubusercontent.com/73699193/98110782-f4985c00-1ee2-11eb-97a7-1fed3c6b042c.png)
+
+
+
+## Self-healing (Liveness Probe)
+
+- product 서비스 정상 확인
+```
+kubectl get all -n coffee
+```
+
+![image](https://user-images.githubusercontent.com/27958588/98096336-fb1cd880-1ece-11eb-9b99-3d704cd55fd2.jpg)
+
+
+- deployment.yml 에 Liveness Probe 옵션 추가
+```
+cd ~/coffee/product/kubernetes
+vi deployment.yml
+
+(아래 설정 변경)
+livenessProbe:
+	tcpSocket:
+	  port: 8081
+	initialDelaySeconds: 5
+	periodSeconds: 5
+```
+![image](https://user-images.githubusercontent.com/27958588/98096375-0839c780-1ecf-11eb-85fb-00e8252aa84a.jpg)
+
+- product pod에 liveness가 적용된 부분 확인
+```
+kubectl describe deploy product -n coffee
+```
+![image](https://user-images.githubusercontent.com/27958588/98096393-0a9c2180-1ecf-11eb-8ac5-f6048160961d.jpg)
+
+- product 서비스의 liveness가 발동되어 13번 retry 시도 한 부분 확인
+```
+kubectl get pod -n coffee
+```
+
+![image](https://user-images.githubusercontent.com/27958588/98096461-20a9e200-1ecf-11eb-8b02-364162baa355.jpg)
