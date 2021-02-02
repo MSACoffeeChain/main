@@ -372,7 +372,7 @@ hystrix:
 - 60초 동안 실시
 
 ```
-siege -c100 -t60S -r10 -v --content-type "application/json" 'http://app:8080/orders POST {"item": "abc123", "qty":3}'
+siege -c100 -t60S -r10 -v --content-type "application/json" 'http://10.0.232.104:8080/orders POST {"productName":"Americano", "qty":1}'
 ```
 
 ## 오토스케일 아웃
