@@ -97,32 +97,28 @@ MSAEZ로 모델링한 이벤트스토밍 결과
 
 ![image](https://user-images.githubusercontent.com/75309297/106581014-bcf28c00-6585-11eb-867d-df5c2fe91896.png)
 
-
     - 고객이 커피를 주문한다. (OK)
     - 커피가 만들어진다. (OK)
     - 커피가 만들어 지면 재고가 Stock에 전달된다. (OK)
     
-
 ![image](https://user-images.githubusercontent.com/75309297/106581647-6d609000-6586-11eb-88ce-cf81b4681b47.png)
-
 
     - 고객이 커피를 주문한다. (OK)
     - 커피가 만들어진다. (OK)
     - 커피가 만들어지면 고객이 order에서 조회 할 수 있다.(OK)
-    
-    
+      
 ![image](https://user-images.githubusercontent.com/75309297/106582664-96cdeb80-6587-11eb-8a21-d7f7aba5492d.png)
-
 
     - 고객이 주문을 취소할 수 있다.(OK)
     - 주문이 취소되면 커피를 만들이 않는다.(OK)
     - 고객이 order에서 조회 할 수 있다. (OK)
 
-
 ![image](https://user-images.githubusercontent.com/75309297/106582947-e7454900-6587-11eb-8819-d65f48ae10bd.png)
 
-
     - 고객이 MyPage에서 커피주문 내역을 볼 수 있어야 한다.(OK)
+       
+### 비기능적 요구사항
+
     
     
 # 구현
