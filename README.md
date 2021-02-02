@@ -44,7 +44,7 @@
 
 ### 헥사고날 아키텍처 다이어그램 도출 (Polyglot)
 
-![image](https://user-images.githubusercontent.com/75309297/106577915-4902b480-6582-11eb-9620-3971d91b6803.png)
+![image](https://user-images.githubusercontent.com/75309297/106578384-cb8b7400-6582-11eb-95ec-55ba8da71a64.png)
 
 
 
