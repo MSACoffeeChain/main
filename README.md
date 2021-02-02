@@ -69,7 +69,7 @@
 
     - 고객이 주문을 취소할 수 있다.(OK)
     - 주문이 취소되면 커피를 만들이 않는다.(OK)
-    - 고객이 order에서 조회 할 수 있다.
+    - 고객이 order에서 조회 할 수 있다. (OK)
 
 
 ![image](https://user-images.githubusercontent.com/75309297/106582947-e7454900-6587-11eb-8819-d65f48ae10bd.png)
