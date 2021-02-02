@@ -8,7 +8,7 @@
 - [구현](#구현)
 - [운영](#운영)
 
-# 서비스-시나리오
+# 서비스 시나리오
 
 # 체크포인트
 
@@ -243,3 +243,52 @@ http GET http://localhost:8081/orders/1     # 'Requested' 였던 상태값이 'C
 ![12_time분리_2](https://user-images.githubusercontent.com/77084784/106619700-330de780-65b4-11eb-818e-70152aba4400.jpg)
 
 # 운영
+
+## Deploy / Pipeline
+- 네임스페이스 만들기
+```bash
+kubectl create ns coffee
+kubectl get ns
+```
+![kubectl_create_ns](https://user-images.githubusercontent.com/26760226/106624530-1922d380-65b9-11eb-916a-5b6956a013ad.png)
+
+- 폴더 만들기, 해당 폴더로 이동
+``` bash
+mkdir coffee
+cd coffee
+```
+![mkdir_coffee](https://user-images.githubusercontent.com/26760226/106623326-d7ddf400-65b7-11eb-92af-7b8eacb4eeb3.png)
+
+- 소스 가져오기
+``` bash
+git clone https://github.com/MSACoffeeChain/main.git
+```
+![git_clone](https://user-images.githubusercontent.com/26760226/106623315-d6143080-65b7-11eb-8bf0-b7604d2dd2db.png)
+
+- 빌드 하기
+``` bash
+cd order
+mvn package
+```
+![mvn_package](https://user-images.githubusercontent.com/26760226/106623329-d7ddf400-65b7-11eb-8d1b-55ec35dfb01e.png)
+
+- 도커라이징 : Azure 레지스트리에 도커 이미지 푸시하기
+```bash
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/order:latest .
+```
+![az_acr_build](https://user-images.githubusercontent.com/26760226/106623311-d4e30380-65b7-11eb-9daf-63591b7b2ed8.png)
+
+- 컨테이너라이징 : 디플로이 생성 확인
+```bash
+kubectl apply -f kubernetes/deployment.yml
+kubectl get all -n coffee
+```
+![kubectl_apply](https://user-images.githubusercontent.com/26760226/106624114-a7e32080-65b8-11eb-965b-b1323c52d58e.png)
+
+- 컨테이너라이징 : 서비스 생성 확인
+```bash
+kubectl expose deploy order --type="ClusterIP" --port=8080 -n coffee
+kubectl get all -n coffee
+```
+![kubectl_expose](https://user-images.githubusercontent.com/26760226/106623324-d7455d80-65b7-11eb-809c-165bfa828bbe.png)
+
