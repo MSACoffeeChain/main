@@ -55,11 +55,19 @@ MSAEZ로 모델링한 이벤트스토밍 결과
 
 ![image](https://user-images.githubusercontent.com/75309297/106565449-2e284400-6572-11eb-8d78-0e86449b4c23.png)
 
+    - 주문, 생산, 재고 어그리게잇을 생성하고 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
+
 ### 바운디드 컨택스트 묶기
 
 ![image](https://user-images.githubusercontent.com/75309297/106565561-59ab2e80-6572-11eb-80c7-66e17c71bfa4.png)
 
-### 폴리시 추가
+- 도메인 서열 분리
+
+        - Core Domain:  order, product : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 order 의 경우 1주일 1회 미만, product 의 경우 1개월 1회 미만
+        - Supporting Domain:  customercenter(view) : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
+        - General Domain:  stock : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음 
+
+### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
 
 ![image](https://user-images.githubusercontent.com/75309297/106565730-9840e900-6572-11eb-95d8-2f2b6c74f6f2.png)
 
@@ -67,13 +75,15 @@ MSAEZ로 모델링한 이벤트스토밍 결과
 
 ![image](https://user-images.githubusercontent.com/75309297/106565854-ce7e6880-6572-11eb-898a-a24569800fc3.png)
 
-### 컨택스트맵핑
+### 컨택스트맵핑 (점선은 Pub/Sub, 실선은 Req/Resp)
 
 ![image](https://user-images.githubusercontent.com/75309297/106565996-0685ab80-6573-11eb-8c9d-bd34e59fffcd.png)
 
 ### 완성된 모형
 
 ![image](https://user-images.githubusercontent.com/75309297/106566105-32089600-6573-11eb-93cf-3a1fd5fea7b5.png)
+
+    - View Model 추가
 
 ### 헥사고날 아키텍처 다이어그램 도출 (Polyglot)
 
