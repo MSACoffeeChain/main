@@ -6,6 +6,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +78,12 @@ public class MypageViewHandler {
         }
     }
 
+    @Transactional
     @StreamListener(KafkaProcessor.INPUT)
     public void whenProductCanceled_then_DELETE_1(@Payload ProductCanceled productCanceled) {
+
+        System.out.println("canceled >> " + productCanceled.getOrderId());
+
         try {
             if (productCanceled.isMe()) {
                 // view 레파지 토리에 삭제 쿼리
