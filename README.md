@@ -42,6 +42,12 @@
 
 ![image](https://user-images.githubusercontent.com/75309297/106566105-32089600-6573-11eb-93cf-3a1fd5fea7b5.png)
 
+### 헥사고날 아키텍처 다이어그램 도출 (Polyglot)
+
+![image](https://user-images.githubusercontent.com/75309297/106577915-4902b480-6582-11eb-9620-3971d91b6803.png)
+
+
+
 # 구현
 
 # 운영
