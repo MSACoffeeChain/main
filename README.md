@@ -31,6 +31,10 @@
 
 ## TO-BE 조직 (Vertically-Aligned)
 
+![image](https://user-images.githubusercontent.com/75309297/106628986-b1bb5280-65bd-11eb-9d2b-3bc6ce6d717f.png)
+
+## 이벤트 스토밍 결과
+MSAEZ로 모델링한 이벤트스토밍 결과
 
 ### 이벤트 도출
 
