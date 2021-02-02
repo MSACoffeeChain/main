@@ -27,7 +27,7 @@
 
 ## AS-IS 조직 (Horizontally-Aligned)
 
-
+![image](https://user-images.githubusercontent.com/75309297/106628829-8c2e4900-65bd-11eb-8360-ed2df27854e0.png)
 
 ## TO-BE 조직 (Vertically-Aligned)
 
