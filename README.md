@@ -22,3 +22,7 @@ Here are some ideas to get you started:
 어그리게잇 추가
 
 ![image](https://user-images.githubusercontent.com/75309297/106565449-2e284400-6572-11eb-8d78-0e86449b4c23.png)
+
+바운디드 컨택스트 묶기
+
+![image](https://user-images.githubusercontent.com/75309297/106565561-59ab2e80-6572-11eb-80c7-66e17c71bfa4.png)
