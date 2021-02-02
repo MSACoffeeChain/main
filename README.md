@@ -42,8 +42,11 @@ MSAEZ로 모델링한 이벤트스토밍 결과
 
 ### 부적격 이벤트 탈락
 
+![image](https://user-images.githubusercontent.com/75309297/106629404-25f5f600-65be-11eb-8e00-1751e9c3e49b.png)
 
-
+    - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
+    - 본사에 재고요청됨, 결제됨, 결제취소됨 : 프로젝트 범위외의 서비스
+    
 ### 엑터,커맨드 만들기
 
 ![image](https://user-images.githubusercontent.com/75309297/106565267-e1dd0400-6571-11eb-9b03-b80e1fe7f4a2.png)
