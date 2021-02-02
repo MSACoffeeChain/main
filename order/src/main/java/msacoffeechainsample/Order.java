@@ -20,6 +20,14 @@ public class Order {
 
     @PrePersist
     public void onPrePersist() {
+    	
+      try {
+  	  Thread.currentThread();
+		  Thread.sleep((long) (400 + Math.random() * 220));
+  	  
+	  } catch (InterruptedException e) {
+	      e.printStackTrace();
+	  }
 
         // Status 변화 후 Order insert
         this.setStatus("Requested");
