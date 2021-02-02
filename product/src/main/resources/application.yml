@@ -65,3 +65,6 @@ spring:
         event-out:
           destination: msacoffeechainsample
           contentType: application/json
+api:
+  stock:
+    url: ${configurl}

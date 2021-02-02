@@ -20,6 +20,12 @@ spec:
           image: skccteam03.azurecr.io/order:latest
           ports:
             - containerPort: 8080
+          env:
+            - name: configurl
+              valueFrom:
+                configMapKeyRef:
+                  name: apiorderurl
+                  key: url
           readinessProbe:
             httpGet:
               path: '/actuator/health'
