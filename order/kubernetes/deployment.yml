@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order
+  namespace: coffee
   labels:
     app: order
 spec:
@@ -17,6 +18,7 @@ spec:
       containers:
         - name: order
           image: username/order:latest
+          image: skccteam03/order:latest
           ports:
             - containerPort: 8080
           readinessProbe:

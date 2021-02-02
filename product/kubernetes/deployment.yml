@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: product
+  namespace: coffee
   labels:
     app: product
 spec:
@@ -17,6 +18,7 @@ spec:
       containers:
         - name: product
           image: username/product:latest
+          image: skccteam03/product:latest
           ports:
             - containerPort: 8080
           readinessProbe:

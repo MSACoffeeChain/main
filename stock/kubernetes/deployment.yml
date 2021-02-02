@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: stock
-          image: skcc03359.azurecr.io/stock:latest
+          image: skccteam03.azurecr.io/stock:latest
           ports:
             - containerPort: 8080
           readinessProbe:
