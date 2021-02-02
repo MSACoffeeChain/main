@@ -38,6 +38,7 @@ MSAEZ로 모델링한 이벤트스토밍 결과
 
 ### 이벤트 도출
 
+![image](https://user-images.githubusercontent.com/75309297/106629302-09f25480-65be-11eb-8365-06896c609d26.png)
 
 ### 부적격 이벤트 탈락
 
