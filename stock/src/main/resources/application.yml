@@ -62,7 +62,7 @@ spring:
         event-out:
           destination: msacoffeechainsample
           contentType: application/json
-feign:
+feign: 
   hystrix:
     enabled: true
 
