@@ -239,9 +239,9 @@ public interface StockService {
 #제품(product) 서비스를 잠시 내려놓음 (ctrl+c)
 
 #주문취소 (order)
-http PATCH http://localhost:8081/orders/2 status="Canceled"    #Fail
+http PATCH http://localhost:8081/orders/1 status="Canceled"    #Fail
 ```
-![image](https://user-images.githubusercontent.com/73699193/98072284-04934a00-1ea9-11eb-9fad-40d3996e109f.png)
+![9_cancel_fail](https://user-images.githubusercontent.com/77084784/106677389-067dbe00-65fc-11eb-8309-12ba029321d9.jpg)
 
 ```bash
 #제품(product) 서비스 재기동
@@ -251,7 +251,7 @@ mvn spring-boot:run
 #주문취소 (order)
 http PATCH http://localhost:8081/orders/2 status="Canceled"    #Success
 ```
-![image](https://user-images.githubusercontent.com/73699193/98074359-9f8e2300-1ead-11eb-8854-0449a65ff55c.png)
+![9_cancel_ok](https://user-images.githubusercontent.com/77084784/106677460-1eedd880-65fc-11eb-8470-4b8c0b170c8f.jpg)
 
 
 
