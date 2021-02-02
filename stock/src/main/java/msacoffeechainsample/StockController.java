@@ -59,10 +59,12 @@ public class StockController {
     public Stock patch(@PathVariable("id") Long id, @RequestBody Stock inputStock) {
     	
       try {
-      Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-  } catch (InterruptedException e) {
-      e.printStackTrace();
-  }
+    	  Thread.currentThread();
+		  Thread.sleep((long) (400 + Math.random() * 220));
+    	  
+	  } catch (InterruptedException e) {
+	      e.printStackTrace();
+	  }
 
 	Optional<Stock> stockOptional = stockRepository.findById(id);
 
