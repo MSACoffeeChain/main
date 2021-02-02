@@ -86,5 +86,160 @@
     
     
 # 구현.
+서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 8084 이다)
+
+```
+cd order
+mvn spring-boot:run
+
+cd product
+mvn spring-boot:run 
+
+cd stock
+mvn spring-boot:run  
+
+cd customercenter
+mvn spring-boot:run  
+```
+
+## DDD 의 적용
+
+각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 order 마이크로 서비스). 
+이때 가능한 현업에서 사용하는 언어(유비쿼터스 랭귀지)를 그대로 사용하려고 노력했다. 
+하지만, 일부 구현 단계에 영문이 아닌 경우는 실행이 불가능한 경우가 발생하여 영문으로 구축하였다.  
+(Maven pom.xml, Kafka의 topic id, FeignClient 의 서비스 ID 등은 한글로 식별자를 사용하는 경우 오류 발생)
+
+![1_DDD](https://user-images.githubusercontent.com/77084784/106618271-9c8cf680-65b2-11eb-8408-252aa417cc56.jpg)
+
+Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 
+데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
+
+![2_RestRepository](https://user-images.githubusercontent.com/77084784/106618497-dd850b00-65b2-11eb-85a1-76803232a2f4.jpg)
+
+## 폴리글랏 퍼시스턴스
+Product MSA의 경우 H2 DB인 주문과 결제와 달리 Hsql으로 구현하여 MSA간 서로 다른 종류의 DB간에도 문제 없이 동작하여 다형성을 만족하는지 확인하였다. 
+
+
+order, stock, customercenter의 pom.xml 설정
+
+![3_Polyglot](https://user-images.githubusercontent.com/77084784/106618577-f2fa3500-65b2-11eb-877c-f73a8364c2c3.jpg)
+
+product의 pom.xml 설정
+
+![4_Polyglot](https://user-images.githubusercontent.com/77084784/106618672-102f0380-65b3-11eb-81a9-f24d2d7f68ca.jpg)
+
+
+## Gateway 적용
+
+gateway > resources > applitcation.yml 설정
+
+![5_Gateway](https://user-images.githubusercontent.com/77084784/106618782-3359b300-65b3-11eb-8937-86256d327971.jpg)
+
+gateway 테스트
+
+```
+http POST http://10.0.232.104:8080/orders productName="Americano" qty=1
+```
+![6_Gateway](https://user-images.githubusercontent.com/77084784/106618857-4b313700-65b3-11eb-83aa-c9f04a28683b.jpg)
+
+
+## 동기식 호출 과 Fallback 처리
+
+분석단계에서의 조건 중 하나로 제품(product) -> 제고(stock) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
+호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
+
+- 서비스를 호출하기 위하여 FeignClient 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
+```
+# (app) external > StockService.java
+
+package msacoffeechainsample.external;
+
+@FeignClient(name="stock", url="${api.stock.url}")
+public interface StockService {
+
+    @RequestMapping(method= RequestMethod.POST, path="/stocks/reduce")
+    public boolean reduce(@RequestBody Stock stock);
+
+}
+```
+![7_동기호출](https://user-images.githubusercontent.com/77084784/106619020-7caa0280-65b3-11eb-9c88-32ea7e810f58.jpg)
+
+- 주문 취소 시 제고 변경을 먼저 요청하도록 처리
+```
+# (app) Order.java (Entity)
+
+    @PreUpdate
+    public void onPreUpdate(){
+
+       msacoffeechainsample.external.Product product = new msacoffeechainsample.external.Product();
+       product.setId(orderCanceled.getProductId());
+       product.setOrderId(orderCanceled.getId());
+       product.setProductName(orderCanceled.getProductName());
+       product.setStatus(orderCanceled.getStatus());
+       product.setQty(orderCanceled.getQty());
+        
+       // req/res
+       OrderApplication.applicationContext.getBean(msacoffeechainsample.external.ProductService.class)
+                    .cancel(product.getId(), product);
+    }
+```
+![8_Req_Res](https://user-images.githubusercontent.com/77084784/106619124-99463a80-65b3-11eb-827d-bae3d43ccfe7.jpg)
+
+- 동기식 호출이 적용되서 제품 서비스에 장애가 나면 주문 서비스도 못받는다는 것을 확인:
+
+```
+#제품(product) 서비스를 잠시 내려놓음 (ctrl+c)
+
+#주문취소 (order)
+http PATCH http://localhost:8081/orders/2 status="Canceled"    #Fail
+```
+![image](https://user-images.githubusercontent.com/73699193/98072284-04934a00-1ea9-11eb-9fad-40d3996e109f.png)
+
+```
+#제품(product) 서비스 재기동
+cd product
+mvn spring-boot:run
+
+#주문취소 (order)
+http PATCH http://localhost:8081/orders/2 status="Canceled"    #Success
+```
+![image](https://user-images.githubusercontent.com/73699193/98074359-9f8e2300-1ead-11eb-8854-0449a65ff55c.png)
+
+
+
+## 비동기식 호출 / 시간적 디커플링 / 장애격리 
+
+
+주문(order)이 이루어진 후에 제품(product)로 이를 알려주는 행위는 비 동기식으로 처리하여 제품(product)의 처리를 위하여 주문이 블로킹 되지 않아도록 처리한다.
+ 
+- 주문이 되었다(Ordered)는 도메인 이벤트를 카프카로 송출한다(Publish)
+ 
+![10_비동기 호출(주문_제조)](https://user-images.githubusercontent.com/77084784/106619371-e0343000-65b3-11eb-9599-ca40b275751b.jpg)
+
+- 제품(product)에서는 주문(ordered) 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다.
+- 주문접수(Order)는 송출된 주문완료(ordered) 정보를 제품(product)의 Repository에 저장한다.:
+ 
+![11_비동기 호출(주문_제조)](https://user-images.githubusercontent.com/77084784/106619501-01951c00-65b4-11eb-88e9-8870bad805f7.jpg)
+
+제품(product) 시스템은 주문(order)/제고(stock)와 완전히 분리되어있으며(sync transaction 없음), 이벤트 수신에 따라 처리되기 때문에, 제품(product)이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다.(시간적 디커플링):
+```
+#제품(product) 서비스를 잠시 내려놓음 (ctrl+c)
+
+#주문하기(order)
+http http://localhost:8081/orders item="Hot Tea" qty=10  #Success
+
+#주문상태 확인
+http GET http://localhost:8081/orders/1    # 상태값이 'Completed'이 아닌 'Requested'에서 멈춤을 확인
+```
+![12_time분리_1](https://user-images.githubusercontent.com/77084784/106619595-196ca000-65b4-11eb-892e-a0ad2fa1b7f0.jpg)
+```
+#제품(product) 서비스 기동
+cd product
+mvn spring-boot:run
+
+#주문상태 확인
+http GET http://localhost:8081/orders/1     # 'Requested' 였던 상태값이 'Completed'로 변경된 것을 확인
+```
+![12_time분리_2](https://user-images.githubusercontent.com/77084784/106619700-330de780-65b4-11eb-818e-70152aba4400.jpg)
 
 # 운영
