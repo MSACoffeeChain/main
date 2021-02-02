@@ -48,7 +48,7 @@
 
 ### 기능적 요구사항 검증
 
-
+![image](https://user-images.githubusercontent.com/75309297/106581014-bcf28c00-6585-11eb-867d-df5c2fe91896.png)
 
 - 고객이 커피를 주문한다. (ok)
 - 커피가 만들어진다 (ok)
