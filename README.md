@@ -22,6 +22,18 @@
 # 서비스 시나리오
 
 # 체크포인트
+Saga
+CQRS
+Correlation
+Req/Resp
+Gateway
+Deploy/ Pipeline
+Circuit Breaker
+Autoscale (HPA)
+Zero-downtime deploy (Readiness Probe)
+Config Map/ Persistence Volume
+Polyglot
+Self-healing (Liveness Probe)
 
 # 분석설계
 
