@@ -46,6 +46,7 @@
 
 ![image](https://user-images.githubusercontent.com/75309297/106578384-cb8b7400-6582-11eb-95ec-55ba8da71a64.png)
 
+### 기능적 요구사항 검증
 
 
 # 구현
