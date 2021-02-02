@@ -1,3 +1,6 @@
+![image](https://user-images.githubusercontent.com/77084784/106565531-4e580300-6572-11eb-848c-3be3d05f8256.jpg)
+
+
 ### Hi there 👋
 
 <!--
@@ -39,7 +42,4 @@ Here are some ideas to get you started:
 
 ![image](https://user-images.githubusercontent.com/75309297/106565996-0685ab80-6573-11eb-8c9d-bd34e59fffcd.png)
 
-완성된 모형
-
-![image](https://user-images.githubusercontent.com/75309297/106566105-32089600-6573-11eb-93cf-3a1fd5fea7b5.png)
 
