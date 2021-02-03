@@ -509,14 +509,6 @@ kubectl get all -n coffee
 
 ## Self-healing (Liveness Probe)
 
-- product 서비스 정상 확인
-```
-kubectl get all -n coffee
-```
-
-![image](https://user-images.githubusercontent.com/27958588/98096336-fb1cd880-1ece-11eb-9b99-3d704cd55fd2.jpg)
-
-
 - deployment.yml 에 Liveness Probe 옵션 추가
 ```
 cd ~/coffee/product/kubernetes
@@ -529,7 +521,7 @@ livenessProbe:
 	initialDelaySeconds: 5
 	periodSeconds: 5
 ```
-![image](https://user-images.githubusercontent.com/27958588/98096375-0839c780-1ecf-11eb-85fb-00e8252aa84a.jpg)
+![image](https://user-images.githubusercontent.com/75309297/106708030-8f651b80-6635-11eb-979a-bee010a28e86.png)
 
 - product pod에 liveness가 적용된 부분 확인
 ```
