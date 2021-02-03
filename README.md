@@ -378,7 +378,7 @@ hystrix:
 ```
 siege -c10 -t60S -r10 -v --content-type "application/json" 'http://10.0.209.210:8080/products POST {"orderId":1, "status":"Requested", "productName":"Ame", "qty":1}'
 ```
-- 부하 발생하여 CB가 발동하여 요청 실패처리하였고, 밀린 부하가 pay에서 처리되면서 다시 order를 받기 시작
+- 부하 발생하여 CB가 발동하여 요청 실패처리하였고, 밀린 부하가 stock에서 처리되면서 다시 product를 받기 시작
 
 ![image](https://user-images.githubusercontent.com/6468351/106703226-31ccd100-662d-11eb-9463-a10bb211cd70.png)
 
