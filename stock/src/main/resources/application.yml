@@ -30,14 +30,7 @@ spring:
         event-out:
           destination: msacoffeechainsample
           contentType: application/json
-feign:
-  hystrix:
-    enabled: true
 
-hystrix:
-  command:
-    default:
-      execution.isolation.thread.timeoutInMilliseconds: 610
 logging:
   level:
     org.hibernate.type: trace
@@ -69,11 +62,3 @@ spring:
         event-out:
           destination: msacoffeechainsample
           contentType: application/json
-feign:
-  hystrix:
-    enabled: true
-
-hystrix:
-  command:
-    default:
-      execution.isolation.thread.timeoutInMilliseconds: 610
