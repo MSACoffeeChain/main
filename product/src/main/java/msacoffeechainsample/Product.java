@@ -25,7 +25,7 @@ public class Product {
 //  		  Thread.sleep((long) (400 + Math.random() * 220));
 //      	  
 //  	  } catch (InterruptedException e) {
-//  	      e.printStackTrace();
+//  	      e.printStackTrace(); 
 //  	  }
 
         // Event 객체 생성
