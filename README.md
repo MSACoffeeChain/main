@@ -497,11 +497,6 @@ kubectl get pod/product-66ddb989b8-r82sm -n coffee -o yaml | kubectl replace --f
 http POST localhost:8081/orders productName="Americano" qty=3
 kubectl get all -n coffee
 ```
-![image](https://user-images.githubusercontent.com/73699193/98110323-42f92b00-1ee2-11eb-90f3-fe8044085e9d.png)
-
-![image](https://user-images.githubusercontent.com/73699193/98110445-720f9c80-1ee2-11eb-851e-adcd1f2f7851.png)
-
-![image](https://user-images.githubusercontent.com/73699193/98110782-f4985c00-1ee2-11eb-97a7-1fed3c6b042c.png)
 
 
 
