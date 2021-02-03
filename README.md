@@ -529,7 +529,7 @@ kubectl describe deploy product -n coffee
 ```
 ![image](https://user-images.githubusercontent.com/27958588/98096393-0a9c2180-1ecf-11eb-8ac5-f6048160961d.jpg)
 
-- product 서비스의 liveness가 발동되어 13번 retry 시도 한 부분 확인
+- product 서비스의 liveness가 발동되어 5번 retry 시도 한 부분 확인
 ```
 kubectl get pod -n coffee
 ```
