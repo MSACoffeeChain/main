@@ -394,10 +394,10 @@ siege -c10 -t60S -r10 -v --content-type "application/json" 'http://10.0.209.210:
 
 ## Config Map
 
-# Service ClusterIP 확인
+### Service ClusterIP 확인
 ![image](https://user-images.githubusercontent.com/64818523/106609778-4c5d6680-65a9-11eb-8b31-8e11b3e22162.png)
 
-# order ConfigMap 설정
+### order ConfigMap 설정
   - order/src/main/resources/apllication.yml 설정
 
   * default쪽
@@ -413,7 +413,7 @@ siege -c10 -t60S -r10 -v --content-type "application/json" 'http://10.0.209.210:
 ![image](https://user-images.githubusercontent.com/64818523/106609409-dd800d80-65a8-11eb-8321-aa047e8a68aa.png)
 
 
-# product ConfigMap 설정
+### product ConfigMap 설정
   - product/src/main/resources/apllication.yml 설정
 
   * default쪽
@@ -429,7 +429,7 @@ siege -c10 -t60S -r10 -v --content-type "application/json" 'http://10.0.209.210:
 ![image](https://user-images.githubusercontent.com/64818523/106612752-c93e0f80-65ac-11eb-9509-9938f4ccf767.png)
 
 
-# config map 생성 후 조회
+### config map 생성 후 조회
 ```
 kubectl create configmap apiorderurl --from-literal=url=http://10.0.54.30:8080 --from-literal=fluentd-server-ip=10.xxx.xxx.xxx -n coffee
 ```
