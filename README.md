@@ -336,7 +336,7 @@ mvn package
 ```bash
 az acr build --registry skccteam03 --image skccteam03.azurecr.io/order:latest .
 ```
-![az_acr_build](https://user-images.githubusercontent.com/26760226/106623311-d4e30380-65b7-11eb-9daf-63591b7b2ed8.png)
+![az_acr_build](https://user-images.githubusercontent.com/26760226/106706352-e9181680-6632-11eb-8f22-0fbf80a9a575.png)
 
 - 컨테이너라이징 : 디플로이 생성 확인
 ```bash
