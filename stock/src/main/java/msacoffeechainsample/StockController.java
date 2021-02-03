@@ -17,6 +17,12 @@ public class StockController {
     @RequestMapping(method=RequestMethod.POST, path="/stocks/reduce")
     public boolean stockReduced(@RequestBody Stock inputStock) {
 
+        try {
+            Thread.sleep((long) (1000 * 6));
+	} catch (InterruptedException e) {
+            e.printStackTrace();
+	}
+
 	Optional<Stock> stockOptional = stockRepository.findByProductName(inputStock.getProductName());
 
 	if (stockOptional.isPresent()) {
@@ -57,14 +63,6 @@ public class StockController {
 
     @RequestMapping(method=RequestMethod.PATCH, path="/stocks/{id}")
     public Stock patch(@PathVariable("id") Long id, @RequestBody Stock inputStock) {
-    	
-//      try {
-//    	  Thread.currentThread();
-//		  Thread.sleep((long) (400000 + Math.random() * 220));
-//    	  
-//	  } catch (InterruptedException e) {
-//	      e.printStackTrace();
-//	  }
 
 	Optional<Stock> stockOptional = stockRepository.findById(id);
 

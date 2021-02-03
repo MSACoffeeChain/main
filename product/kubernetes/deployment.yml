@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: product
-          image: skccteam03.azurecr.io/product:latest
+          image: sjkang.azurecr.io/product:latest
           ports:
             - containerPort: 8080
           env:

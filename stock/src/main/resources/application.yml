@@ -30,7 +30,6 @@ spring:
         event-out:
           destination: msacoffeechainsample
           contentType: application/json
-
 logging:
   level:
     org.hibernate.type: trace

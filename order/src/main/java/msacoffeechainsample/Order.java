@@ -20,7 +20,6 @@ public class Order {
 
     @PrePersist
     public void onPrePersist() {
-    	
 
         // Status 변화 후 Order insert
         this.setStatus("Requested");

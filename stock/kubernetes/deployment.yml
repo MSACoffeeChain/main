@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: stock
-          image: skccteam03.azurecr.io/stock:latest
+          image: sjkang.azurecr.io/stock:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -36,8 +36,3 @@ spec:
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
-#          resources:
-#            limits:
-#              cpu: 500m
-#            requests:
-#              cpu: 200m
