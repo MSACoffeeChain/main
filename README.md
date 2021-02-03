@@ -177,14 +177,14 @@ Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양�
 ![2_RestRepository](https://user-images.githubusercontent.com/77084784/106618497-dd850b00-65b2-11eb-85a1-76803232a2f4.jpg)
 
 ## 폴리글랏 퍼시스턴스
-Product MSA의 경우 H2 DB인 주문과 제고와 달리 Hsql으로 구현하여 MSA간 서로 다른 종류의 DB간에도 문제 없이 동작하여 다형성을 만족하는지 확인하였다. 
+Stock MSA의 경우 H2 DB인 주문과 제작와 달리 Hsql으로 구현하여 MSA간 서로 다른 종류의 DB간에도 문제 없이 동작하여 다형성을 만족하는지 확인하였다. 
 
 
-order, stock, customercenter의 pom.xml 설정
+order, product, customercenter의 pom.xml 설정
 
 ![3_Polyglot](https://user-images.githubusercontent.com/77084784/106618577-f2fa3500-65b2-11eb-877c-f73a8364c2c3.jpg)
 
-product의 pom.xml 설정
+stock의 pom.xml 설정
 
 ![4_Polyglot](https://user-images.githubusercontent.com/77084784/106618672-102f0380-65b3-11eb-81a9-f24d2d7f68ca.jpg)
 
