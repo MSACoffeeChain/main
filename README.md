@@ -527,7 +527,7 @@ livenessProbe:
 ```
 kubectl describe deploy product -n coffee
 ```
-![image](https://user-images.githubusercontent.com/27958588/98096393-0a9c2180-1ecf-11eb-8ac5-f6048160961d.jpg)
+![image](https://user-images.githubusercontent.com/75309297/106708456-3f3a8900-6636-11eb-93af-07b754f2944a.png)
 
 - product 서비스의 liveness가 발동되어 5번 retry 시도 한 부분 확인
 ```
