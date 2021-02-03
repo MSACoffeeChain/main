@@ -542,4 +542,4 @@ kubectl describe deploy product -n coffee
 kubectl get pod -n coffee
 ```
 
-![image](https://user-images.githubusercontent.com/27958588/98096461-20a9e200-1ecf-11eb-8b02-364162baa355.jpg)
+![image](https://user-images.githubusercontent.com/75309297/106707672-f7ffc880-6634-11eb-9b35-032348772306.png)
