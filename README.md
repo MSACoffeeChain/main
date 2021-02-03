@@ -494,10 +494,22 @@ kubectl get pod/product-66ddb989b8-r82sm -n coffee -o yaml | kubectl replace --f
 
 - configmap 삭제된 상태에서 주문 호출   
 ```
-http POST localhost:8081/orders productName="Americano" qty=3
+kubectl exec -it httpie -- /bin/bash
+http POST http://10.0.101.221:8080/orders productName="Tea" qty=3
+```
+![image](https://user-images.githubusercontent.com/64818523/106706737-765b6b00-6633-11eb-9e73-48aa1190acdb.png)
+
+- configmap 삭제된 상태에서 Pod와 deploy 상태 확인
+```
 kubectl get all -n coffee
 ```
+![image](https://user-images.githubusercontent.com/64818523/106706899-b4588f00-6633-11eb-9670-169421b045ed.png)
 
+- Pod와 상태 상세 확인
+```
+kubectl get pod order-74c76b478-mlpf4 -o yaml -n coffee
+```
+![image](https://user-images.githubusercontent.com/64818523/106706929-c33f4180-6633-11eb-843c-535c0b37904d.png)
 
 
 ## Self-healing (Liveness Probe)
