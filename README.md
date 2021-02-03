@@ -396,10 +396,10 @@ siege -c10 -t60S -r10 -v --content-type "application/json" 'http://10.0.209.210:
 ```bash
 kubectl apply -f kubernetes/deployment_readiness.yml
 ```
-- readiness 옵션이 없는 경우 배포 중 서비스 요청처리 실패
+- readiness 옵션이 없는 경우 배포 중 서비스 요청처리 실패 <br>
 ![1](https://user-images.githubusercontent.com/26760226/106704039-bec45a00-662e-11eb-9a26-dc5d0c403d03.png)
 
-- deployment.yml에 readiness 옵션을 추가
+- deployment.yml에 readiness 옵션을 추가 <br>
 ![2](https://user-images.githubusercontent.com/26760226/106704044-bff58700-662e-11eb-8842-4d1bbbead1ef.png)
 
 - readiness적용된 deployment.yml 적용
@@ -412,10 +412,10 @@ az acr build --registry skccteam03 --image skccteam03.azurecr.io/customercenter:
 kubectl set image deploy customercenter customercenter=skccteam03.azurecr.io/customercenter:v1 -n coffee
 ```
 
-- 기존 버전과 새 버전의 store pod 공존 중
+- 기존 버전과 새 버전의 store pod 공존 중 <br>
 ![3](https://user-images.githubusercontent.com/26760226/106704049-bff58700-662e-11eb-8199-a20723c5245d.png)
 
-- Availability: 100.00 % 확인
+- Availability: 100.00 % 확인 <br>
 ![4](https://user-images.githubusercontent.com/26760226/106704050-c08e1d80-662e-11eb-9214-9136748e1336.png)
 
 ## Config Map
