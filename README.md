@@ -20,6 +20,16 @@
     - [Self-healing (Liveness Probe)](#self-healing-liveness-probe)
 
 # 서비스 시나리오
+ 1. 고객이 커피를 주문한다                                          - Order
+ 2. 주문이 되면 제작팀에 주문이 전달 된다                            - Delivery
+ 3. 주문과 동시에 커피 제작이 시작된다                               - Delivery
+ 4. 제작이 되면 재고관리에 전달 된다                                 - Stock
+ 5. 재고관리에 전달 되면 재고가 차감된다                             - Stock
+ 6. 주문이 시작되면 고객은 진행 상황을 조회할 수 있다                 - Customer Center
+ 7. 고객은 주문을 취소할 수 있다                                    - Order
+ 8. 주문이 취소되면 제작이 취소 된다                                 - Delivery
+ 9. 고객이 주문 상태를 조회 할 수 있다                               - Customer Center
+10. 고객은 모든 진행 내역을 조회 할 수 있다                          - Customer Center
 
 # 체크포인트
 - Saga
