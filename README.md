@@ -286,7 +286,7 @@ http PATCH http://localhost:8081/orders/2 status="Canceled"    #Success
 #제품(product) 서비스를 잠시 내려놓음 (ctrl+c)
 
 #주문하기(order)
-http http://localhost:8081/orders item="Hot Tea" qty=10  #Success
+http http://localhost:8081/orders item="Americano" qty=1  #Success
 
 #주문상태 확인
 http GET http://localhost:8081/orders/1    # 상태값이 'Completed'이 아닌 'Requested'에서 멈춤을 확인
