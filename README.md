@@ -480,7 +480,8 @@ kubectl create configmap apiproducturl --from-literal=url=http://10.0.164.216:80
 ```
 http POST localhost:8081/orders productName="Americano" qty=1
 ```
-![image](https://user-images.githubusercontent.com/73699193/98109319-b732cf00-1ee0-11eb-9e92-ad0e26e398ec.png)
+
+![image](https://user-images.githubusercontent.com/75309297/106707026-e10ca680-6633-11eb-83fa-3bcc907389ad.png)
 
 - configmap 삭제 후 app 서비스 재시작
 ```
